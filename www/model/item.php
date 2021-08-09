@@ -73,7 +73,8 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
 
 function insert_item($db, $name, $price, $stock, $filename, $status){
   $status_value = PERMITTED_ITEM_STATUSES[$status];
-  $sql = "
+  $data = array($name,$price,$stock,$filename,$status_value);
+  $sql  = "
     INSERT INTO
       items(
         name,
@@ -82,38 +83,39 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
         image,
         status
       )
-    VALUES('{$name}', {$price}, {$stock}, '{$filename}', {$status_value});
+    VALUES(?, ?, ?, ?, ?);
   ";
-
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 function update_item_status($db, $item_id, $status){
+  $data = array($status, $item_id);
   $sql = "
     UPDATE
       items
     SET
-      status = {$status}
+      status = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+
+  return execute_query($db, $sql, $data);
 }
 
 function update_item_stock($db, $item_id, $stock){
-  $sql = "
+  $data = array($stock, $item_id);
+  $sql  = "
     UPDATE
       items
     SET
-      stock = {$stock}
+      stock = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
   
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 function destroy_item($db, $item_id){
@@ -132,15 +134,16 @@ function destroy_item($db, $item_id){
 }
 
 function delete_item($db, $item_id){
-  $sql = "
+  $data = array($item_id);
+  $sql  = "
     DELETE FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
   
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 

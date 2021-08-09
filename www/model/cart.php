@@ -63,42 +63,45 @@ function add_cart($db, $user_id, $item_id ) {
 }
 
 function insert_cart($db, $user_id, $item_id, $amount = 1){
-  $sql = "
+  $data = array($item_id, $user_id, $amount);
+  $sql  = "
     INSERT INTO
       carts(
         item_id,
         user_id,
         amount
       )
-    VALUES({$item_id}, {$user_id}, {$amount})
+    VALUES(?, ?, ?)
   ";
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 function update_cart_amount($db, $cart_id, $amount){
-  $sql = "
+  $data = array($amount, $cart_id);
+  $sql  = "
     UPDATE
       carts
     SET
-      amount = {$amount}
+      amount = ?
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 function delete_cart($db, $cart_id){
-  $sql = "
+  $data = array($cart_id);
+  $sql  = "
     DELETE FROM
       carts
     WHERE
-      cart_id = {$cart_id}
+      cart_id = ?
     LIMIT 1
   ";
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
 function purchase_carts($db, $carts){
@@ -119,14 +122,15 @@ function purchase_carts($db, $carts){
 }
 
 function delete_user_carts($db, $user_id){
+  $data = array($user_id);
   $sql = "
     DELETE FROM
       carts
     WHERE
-      user_id = {$user_id}
+      user_id = ?
   ";
 
-  execute_query($db, $sql);
+  execute_query($db, $sql, $data);
 }
 
 

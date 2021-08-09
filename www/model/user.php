@@ -101,12 +101,13 @@ function is_valid_password($password, $password_confirmation){
 }
 
 function insert_user($db, $name, $password){
-  $sql = "
+  $data = array($name, $password);
+  $sql  = "
     INSERT INTO
       users(name, password)
-    VALUES ('{$name}', '{$password}');
+    VALUES (?, ?);
   ";
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $data);
 }
 
