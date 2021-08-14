@@ -16,10 +16,10 @@ function get_item($db, $item_id){
     FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = ?
   ";
 
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, array($item_id));
 }
 
 function get_items($db, $is_open = false){
@@ -73,7 +73,7 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
 
 function insert_item($db, $name, $price, $stock, $filename, $status){
   $status_value = PERMITTED_ITEM_STATUSES[$status];
-  $data = array($name,$price,$stock,$filename,$status_value);
+
   $sql  = "
     INSERT INTO
       items(
@@ -85,11 +85,11 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
       )
     VALUES(?, ?, ?, ?, ?);
   ";
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($name,$price,$stock,$filename,$status_value));
 }
 
 function update_item_status($db, $item_id, $status){
-  $data = array($status, $item_id);
+
   $sql = "
     UPDATE
       items
@@ -100,11 +100,11 @@ function update_item_status($db, $item_id, $status){
     LIMIT 1
   ";
 
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($status, $item_id));
 }
 
 function update_item_stock($db, $item_id, $stock){
-  $data = array($stock, $item_id);
+
   $sql  = "
     UPDATE
       items
@@ -115,7 +115,7 @@ function update_item_stock($db, $item_id, $stock){
     LIMIT 1
   ";
   
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($stock, $item_id));
 }
 
 function destroy_item($db, $item_id){
@@ -134,7 +134,7 @@ function destroy_item($db, $item_id){
 }
 
 function delete_item($db, $item_id){
-  $data = array($item_id);
+
   $sql  = "
     DELETE FROM
       items
@@ -143,7 +143,7 @@ function delete_item($db, $item_id){
     LIMIT 1
   ";
   
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($item_id));
 }
 
 

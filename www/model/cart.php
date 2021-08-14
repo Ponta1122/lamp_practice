@@ -21,9 +21,9 @@ function get_user_carts($db, $user_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
   ";
-  return fetch_all_query($db, $sql);
+  return fetch_all_query($db, $sql, array($user_id));
 }
 
 function get_user_cart($db, $user_id, $item_id){
@@ -45,12 +45,12 @@ function get_user_cart($db, $user_id, $item_id){
     ON
       carts.item_id = items.item_id
     WHERE
-      carts.user_id = {$user_id}
+      carts.user_id = ?
     AND
-      items.item_id = {$item_id}
+      items.item_id = ?
   ";
 
-  return fetch_query($db, $sql);
+  return fetch_query($db, $sql, array($user_id, $item_id));
 
 }
 
@@ -63,7 +63,6 @@ function add_cart($db, $user_id, $item_id ) {
 }
 
 function insert_cart($db, $user_id, $item_id, $amount = 1){
-  $data = array($item_id, $user_id, $amount);
   $sql  = "
     INSERT INTO
       carts(
@@ -74,11 +73,10 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
     VALUES(?, ?, ?)
   ";
 
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($item_id, $user_id, $amount));
 }
 
 function update_cart_amount($db, $cart_id, $amount){
-  $data = array($amount, $cart_id);
   $sql  = "
     UPDATE
       carts
@@ -88,11 +86,10 @@ function update_cart_amount($db, $cart_id, $amount){
       cart_id = ?
     LIMIT 1
   ";
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($amount, $cart_id));
 }
 
 function delete_cart($db, $cart_id){
-  $data = array($cart_id);
   $sql  = "
     DELETE FROM
       carts
@@ -101,7 +98,7 @@ function delete_cart($db, $cart_id){
     LIMIT 1
   ";
 
-  return execute_query($db, $sql, $data);
+  return execute_query($db, $sql, array($cart_id));
 }
 
 function purchase_carts($db, $carts){
@@ -122,7 +119,7 @@ function purchase_carts($db, $carts){
 }
 
 function delete_user_carts($db, $user_id){
-  $data = array($user_id);
+
   $sql = "
     DELETE FROM
       carts
@@ -130,7 +127,7 @@ function delete_user_carts($db, $user_id){
       user_id = ?
   ";
 
-  execute_query($db, $sql, $data);
+  execute_query($db, $sql, array($user_id));
 }
 
 
