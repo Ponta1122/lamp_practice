@@ -6,10 +6,8 @@
   <link rel="stylesheet" href="<?php print(htmlspecialchars(STYLESHEET_PATH . 'admin.css', ENT_QUOTES, 'UTF-8')); ?>">
 </head>
 <body>
-  <?php 
-  include VIEW_PATH . 'templates/header_logined.php'; 
-  ?>
-
+  <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
+  
   <div class="container">
     <h1>商品管理</h1>
 
@@ -43,7 +41,8 @@
           <option value="close">非公開</option>
         </select>
       </div>
-      
+      <!--トークンを隠しフィールドで送信-->
+      <input type="hidden" name="token" value='<?php print $token ;?>'>
       <input type="submit" value="商品追加" class="btn btn-primary">
     </form>
 
@@ -74,6 +73,8 @@
                 </div>
                 <input type="submit" value="変更" class="btn btn-secondary">
                 <input type="hidden" name="item_id" value="<?php print(htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8')); ?>">
+                <!--トークンを隠しフィールドで送信-->
+                <input type="hidden" name="token" value=$token>
               </form>
             </td>
             <td>
@@ -87,11 +88,15 @@
                   <input type="hidden" name="changes_to" value="open">
                 <?php } ?>
                 <input type="hidden" name="item_id" value="<?php print(htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8')); ?>">
+                <!--トークンを隠しフィールドで送信-->
+                <input type="hidden" name="token" value=$token>
               </form>
 
               <form method="post" action="admin_delete_item.php">
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="item_id" value="<?php print(htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8')); ?>">
+                <!--トークンを隠しフィールドで送信-->
+                <input type="hidden" name="token" value=$token>
               </form>
             </td>
           </tr>

@@ -9,6 +9,11 @@ if(is_logined() === true){
   redirect_to(HOME_URL);
 }
 
+//トークンチェック
+if(is_valid_csrf_token($_POST['token']) === false){
+  redirect_to(LOGIN_URL);
+}
+
 $name = get_post('name');
 $password = get_post('password');
 $password_confirmation = get_post('password_confirmation');
@@ -19,13 +24,21 @@ try{
   $result = regist_user($db, $name, $password, $password_confirmation);
   if( $result=== false){
     set_error('ユーザー登録に失敗しました。');
+    //トークン削除
+    delete_session();
     redirect_to(SIGNUP_URL);
   }
 }catch(PDOException $e){
   set_error('ユーザー登録に失敗しました。');
+  //トークン削除
+  delete_session();
   redirect_to(SIGNUP_URL);
 }
 
 set_message('ユーザー登録が完了しました。');
 login_as($db, $name, $password);
+
+//トークン削除
+delete_session();
+
 redirect_to(HOME_URL);

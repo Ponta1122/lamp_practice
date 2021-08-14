@@ -18,6 +18,13 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+//トークンチェック
+if(is_valid_csrf_token($_POST['token']) === false){
+  redirect_to(LOGIN_URL);
+}
+
+
+
 $name = get_post('name');
 $price = get_post('price');
 $status = get_post('status');
@@ -31,5 +38,7 @@ if(regist_item($db, $name, $price, $stock, $status, $image)){
   set_error('商品の登録に失敗しました。');
 }
 
+//トークン削除
+delete_session();
 
 redirect_to(ADMIN_URL);

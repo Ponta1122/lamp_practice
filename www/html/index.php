@@ -6,6 +6,11 @@ require_once MODEL_PATH . 'item.php';
 
 session_start();
 
+//iframe読み込み禁止設定
+header("X-FRAME-OPTIONS: DENY");
+//トークンの作成
+$token = get_csrf_token();
+
 if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }

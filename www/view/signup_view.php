@@ -7,6 +7,7 @@
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
+  
   <div class="container">
     <h1>ユーザー登録</h1>
 
@@ -25,6 +26,8 @@
         <label for="password_confirmation">パスワード（確認用）: </label>
         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
       </div>
+      <!--トークンを隠しフィールドで送信-->
+      <input type="hidden" name="token" value=$token>
       <input type="submit" value="登録" class="btn btn-primary">
     </form>
   </div>

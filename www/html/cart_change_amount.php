@@ -11,6 +11,11 @@ if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
 
+//トークンチェック
+if(is_valid_csrf_token($_POST['token']) === false){
+  redirect_to(LOGIN_URL);
+}
+
 $db = get_db_connect();
 $user = get_login_user($db);
 
@@ -22,5 +27,8 @@ if(update_cart_amount($db, $cart_id, $amount)){
 } else {
   set_error('購入数の更新に失敗しました。');
 }
+
+//トークン削除
+delete_session();
 
 redirect_to(CART_URL);

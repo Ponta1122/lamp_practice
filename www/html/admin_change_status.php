@@ -18,6 +18,11 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+//トークンチェック
+if(is_valid_csrf_token($_POST['token']) === false){
+  redirect_to(LOGIN_URL);
+}
+
 $item_id = get_post('item_id');
 $changes_to = get_post('changes_to');
 
@@ -31,5 +36,7 @@ if($changes_to === 'open'){
   set_error('不正なリクエストです。');
 }
 
+//トークン削除
+delete_session();
 
 redirect_to(ADMIN_URL);

@@ -7,6 +7,7 @@
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header.php'; ?>
+  
   <div class="container">
     <h1>ログイン</h1>
 
@@ -16,6 +17,8 @@
       <div class="form-group">
         <label for="name">名前: </label>
         <input type="text" name="name" id="name" class="form-control">
+        <!--トークンを隠しフィールドで送信-->
+        <input type="hidden" name="token" value=$token>
       </div>
       <div class="form-group">
         <label for="password">パスワード: </label>
