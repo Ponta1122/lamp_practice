@@ -18,6 +18,12 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+//トークンチェック
+if(is_valid_csrf_token($_POST['token']) === false){
+  redirect_to(LOGIN_URL);
+}
+
+
 $item_id = get_post('item_id');
 $stock = get_post('stock');
 
@@ -26,5 +32,8 @@ if(update_item_stock($db, $item_id, $stock)){
 } else {
   set_error('在庫数の変更に失敗しました。');
 }
+
+//トークン削除
+delete_session();
 
 redirect_to(ADMIN_URL);
