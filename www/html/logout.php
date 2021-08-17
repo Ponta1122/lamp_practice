@@ -9,8 +9,7 @@ setcookie(session_name(), '', time() - 42000,
   $params["path"], 
   $params["domain"],
   $params["secure"], 
-  $params["httponly"],
-  $params["csrf_token"]
+  $params["httponly"]
 );
 session_destroy();
 

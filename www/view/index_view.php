@@ -31,7 +31,7 @@
                     <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
                     <input type="hidden" name="item_id" value="<?php print(htmlspecialchars($item['item_id'], ENT_QUOTES, 'UTF-8')); ?>">
                     <!--トークンを隠しフィールドで送信-->
-                    <input type="hidden" name="token" value=$token>
+                    <input type="hidden" name="token" value='<?php print $token ;?>'>
                   </form>
                 <?php } else { ?>
                   <p class="text-danger">現在売り切れです。</p>

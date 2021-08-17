@@ -18,7 +18,7 @@
         <label for="name">名前: </label>
         <input type="text" name="name" id="name" class="form-control">
         <!--トークンを隠しフィールドで送信-->
-        <input type="hidden" name="token" value=$token>
+        <input type="hidden" name="token" value='<?php print $token ;?>'>
       </div>
       <div class="form-group">
         <label for="password">パスワード: </label>

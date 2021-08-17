@@ -38,7 +38,7 @@
                 <input type="submit" value="変更" class="btn btn-secondary">
                 <input type="hidden" name="cart_id" value="<?php print(htmlspecialchars($cart['cart_id'], ENT_QUOTES, 'UTF-8')); ?>">
                 <!--トークンを隠しフィールドで送信-->
-                <input type="hidden" name="token" value=$token>
+                <input type="hidden" name="token" value='<?php print $token ;?>'>
               </form>
             </td>
             <td><?php print(htmlspecialchars(number_format($cart['price'] * $cart['amount']), ENT_QUOTES, 'UTF-8')); ?>円</td>
@@ -48,7 +48,7 @@
                 <input type="submit" value="削除" class="btn btn-danger delete">
                 <input type="hidden" name="cart_id" value="<?php print(htmlspecialchars($cart['cart_id'], ENT_QUOTES, 'UTF-8')); ?>">
                 <!--トークンを隠しフィールドで送信-->
-                <input type="hidden" name="token" value=$token>
+                <input type="hidden" name="token" value='<?php print $token ;?>'>
               </form>
 
             </td>
@@ -60,7 +60,7 @@
       <form method="post" action="finish.php">
         <input class="btn btn-block btn-primary" type="submit" value="購入する">
         <!--トークンを隠しフィールドで送信-->
-        <input type="hidden" name="token" value=$token>
+        <input type="hidden" name="token" value='<?php print $token ;?>'n>
       </form>
     <?php } else { ?>
       <p>カートに商品はありません。</p>

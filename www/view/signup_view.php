@@ -27,7 +27,7 @@
         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
       </div>
       <!--トークンを隠しフィールドで送信-->
-      <input type="hidden" name="token" value=$token>
+      <input type="hidden" name="token" value='<?php print $token ;?>'>
       <input type="submit" value="登録" class="btn btn-primary">
     </form>
   </div>
