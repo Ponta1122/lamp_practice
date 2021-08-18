@@ -102,6 +102,7 @@ function delete_cart($db, $cart_id){
 }
 
 function purchase_carts($db, $carts){
+
   if(validate_cart_purchase($carts) === false){
     return false;
   }
@@ -114,8 +115,20 @@ function purchase_carts($db, $carts){
       set_error($cart['name'] . 'の購入に失敗しました。');
     }
   }
-  
-  delete_user_carts($db, $carts[0]['user_id']);
+    //トランザクション開始
+    $db->beginTransaction();
+
+    //購入履歴テーブルへの保存処理
+    insert_purchase_history($db, $carts[0]['user_id']);
+
+    //購入明細テーブルへの保存処理
+    insert_purchase_details($db, $carts[0]['item_id'], $carts[0]['amount']);
+
+    //カート削除処理
+    delete_user_carts($db, $carts[0]['user_id']);
+
+    //コミット処理
+    $db->commit();
 }
 
 function delete_user_carts($db, $user_id){
@@ -158,3 +171,32 @@ function validate_cart_purchase($carts){
   return true;
 }
 
+//購入履歴テーブルへの保存関数
+function insert_purchase_history($db, $user_id){
+  $sql  = "
+    INSERT INTO
+      purchase_history(
+        user_id
+      )
+    VALUES(?)
+  ";
+
+  return execute_query($db, $sql, array($user_id));
+
+}
+
+//購入明細テーブルへの保存関数
+function insert_purchase_details($db, $item_id, $amount){
+  
+  $sql  = "
+    INSERT INTO
+      purchase_details(
+        item_id,
+        amount
+      )
+    VALUES(?, ?)
+  ";
+
+  return execute_query($db, $sql, array($item_id, $amount));
+
+}
