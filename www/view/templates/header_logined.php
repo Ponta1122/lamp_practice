@@ -10,6 +10,9 @@
           <a class="nav-link" href="<?php print(htmlspecialchars(CART_URL, ENT_QUOTES, 'UTF-8'));?>">カート</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php print(htmlspecialchars(PURCHASE_HISTORY_URL, ENT_QUOTES, 'UTF-8'));?>">購入履歴</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php print(htmlspecialchars(LOGOUT_URL, ENT_QUOTES, 'UTF-8'));?>">ログアウト</a>
         </li>
         <?php if(is_admin($user)){ ?>
