@@ -10,7 +10,7 @@
     <div class="container">
         <span class="mr-5">注文番号：<?php print(htmlspecialchars($purchase_details[0]['order_number'], ENT_QUOTES, 'UTF-8')); ?>番</span>
         <span class="mr-5">購入日時：<?php print(htmlspecialchars($purchase_details[0]['purchase_date'], ENT_QUOTES, 'UTF-8')); ?></span>
-        <span>合計金額：<?php print(htmlspecialchars($purchase_details[0]['price'] * $purchase_details[0]['amount'], ENT_QUOTES, 'UTF-8')); ?>円</span>
+        <span>合計金額：<?php print(htmlspecialchars($purchase_sum_price['sum'], ENT_QUOTES, 'UTF-8')); ?>円</span>
         <h1 class="mt-3">購入明細</h1>
 
         <?php include VIEW_PATH . 'templates/messages.php'; ?>
@@ -25,16 +25,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <!--商品名表示-->
-                    <td><?php print(htmlspecialchars($purchase_details[0]['name'], ENT_QUOTES, 'UTF-8')); ?></td>
-                    <!--商品価格-->
-                    <td><?php print(htmlspecialchars($purchase_details[0]['price'], ENT_QUOTES, 'UTF-8')); ?>円</td>
-                    <!--購入数表示-->
-                    <td><?php print(htmlspecialchars($purchase_details[0]['amount'], ENT_QUOTES, 'UTF-8')); ?></td>
-                    <!--小計表示-->
-                    <td><?php print(htmlspecialchars($purchase_details[0]['price'] * $purchase_details[0]['amount'], ENT_QUOTES, 'UTF-8')); ?>円</td>
-                </tr>
+                <?php foreach($purchase_details as $purchase_details){ ?>
+                    <tr>
+                        <!--商品名表示-->
+                        <td><?php print(htmlspecialchars($purchase_details['name'], ENT_QUOTES, 'UTF-8')); ?></td>
+                        <!--商品価格-->
+                        <td><?php print(htmlspecialchars($purchase_details['price'], ENT_QUOTES, 'UTF-8')); ?>円</td>
+                        <!--購入数表示-->
+                        <td><?php print(htmlspecialchars($purchase_details['amount'], ENT_QUOTES, 'UTF-8')); ?></td>
+                        <!--小計表示-->
+                        <td><?php print(htmlspecialchars($purchase_details['price'] * $purchase_details['amount'], ENT_QUOTES, 'UTF-8')); ?>円</td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>

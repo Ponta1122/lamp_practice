@@ -14,8 +14,7 @@ function get_one_purchase_history($db, $user_id) {
         purchase_history.order_number,
         user_id,
         purchase_date,
-        price,
-        amount
+        sum(price*amount) as sum
     FROM
         purchase_history
     INNER JOIN 
@@ -24,6 +23,8 @@ function get_one_purchase_history($db, $user_id) {
         purchase_history.order_number = purchase_details.order_number
     WHERE
         user_id = ?
+    GROUP BY 
+    	purchase_history.order_number
     ORDER BY 
         purchase_date desc    
     ";
@@ -43,14 +44,15 @@ function get_purchase_historys($db) {
         purchase_history.order_number,
         user_id,
         purchase_date,
-        price,
-        amount
+        sum(price*amount) as sum
     FROM
         purchase_history
     INNER JOIN 
         purchase_details
     ON 
         purchase_history.order_number = purchase_details.order_number
+    GROUP BY 
+    	purchase_history.order_number
     ORDER BY 
         purchase_date desc";
 

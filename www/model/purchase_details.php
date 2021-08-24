@@ -33,3 +33,24 @@ function get_purchase_detail($db, $order_number) {
 
     return fetch_all_query($db, $sql, array($order_number));
 }
+
+//合計金額取得関数
+function get_purchase_sum_prices($db, $order_number) {
+    return get_purchase_sum_price($db, $order_number);
+}
+
+//合計金額取得処理関数
+function get_purchase_sum_price($db, $order_number) {
+
+    $sql = "
+    SELECT
+        SUM(price*amount) as sum
+    FROM
+        purchase_details
+    WHERE
+        order_number = ?
+    ";
+
+return fetch_query($db, $sql, array($order_number));
+    
+}

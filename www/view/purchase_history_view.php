@@ -29,7 +29,7 @@
                         <!--購入日時表示-->
                         <td><?php print(htmlspecialchars($purchase_history['purchase_date'], ENT_QUOTES, 'UTF-8')); ?></td>
                         <!--合計金額表示-->
-                        <td><?php print(htmlspecialchars($purchase_history['price'] * $purchase_history['amount'], ENT_QUOTES, 'UTF-8')); ?>円</td>
+                        <td><?php print(htmlspecialchars($purchase_history['sum'], ENT_QUOTES, 'UTF-8')); ?>円</td>
                         <!--購入明細表示ボタン表示-->
                         <td>
                             <form action="purchase_details.php" method="post">

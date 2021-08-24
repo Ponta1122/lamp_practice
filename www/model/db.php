@@ -47,3 +47,15 @@ function execute_query($db, $sql, $params = array()){
   }
   return false;
 }
+
+function execute_query_last_id($db, $sql, $params = array()){
+  try{
+    $statement = $db->prepare($sql);
+    $statement->execute($params);
+    $last_id = $db->lastInsertId();
+    return $last_id;
+  }catch(PDOException $e){
+    set_error('更新に失敗しました。');
+  }
+  return false;
+}

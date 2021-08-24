@@ -31,5 +31,8 @@ $order_number = get_post('order_number');
 //購入明細データ取得
 $purchase_details = get_purchase_details($db, $order_number);
 
+//購入金額の合計値取得
+$purchase_sum_price = get_purchase_sum_prices($db, $order_number);
+
 //Viewファイル読み込み
 include_once VIEW_PATH . '/purchase_details_view.php';
