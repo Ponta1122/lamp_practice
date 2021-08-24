@@ -33,7 +33,6 @@ if(is_admin($user) === false){
 } else {
     //全ユーザのデータ取得
     $purchase_history = get_all_purchase_history($db);
-    var_dump($purchase_history);
 }
 
 //Viewファイル読み込み
