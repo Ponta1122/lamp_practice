@@ -106,6 +106,10 @@ function purchase_carts($db, $carts){
   if(validate_cart_purchase($carts) === false){
     return false;
   }
+
+  //購入履歴テーブルへの保存処理
+  $order_last_id = insert_purchase_history($db, $carts[0]['user_id']);
+
   foreach($carts as $cart){
     if(update_item_stock(
         $db, 
@@ -114,21 +118,19 @@ function purchase_carts($db, $carts){
       ) === false){
       set_error($cart['name'] . 'の購入に失敗しました。');
     }
-  }
+
     //トランザクション開始
     $db->beginTransaction();
 
-    //購入履歴テーブルへの保存処理
-    insert_purchase_history($db, $carts[0]['user_id']);
-
     //購入明細テーブルへの保存処理
-    insert_purchase_details($db, $carts[0]['item_id'], $carts[0]['amount']);
+    insert_purchase_details($db, $order_last_id, $cart['item_id'], $cart['price'], $cart['amount']);
 
     //カート削除処理
-    delete_user_carts($db, $carts[0]['user_id']);
+    delete_user_carts($db, $carts['user_id']);
 
     //コミット処理
     $db->commit();
+  }
 }
 
 function delete_user_carts($db, $user_id){
@@ -181,22 +183,24 @@ function insert_purchase_history($db, $user_id){
     VALUES(?)
   ";
 
-  return execute_query($db, $sql, array($user_id));
+  return execute_query_last_id($db, $sql, array($user_id));
 
 }
 
 //購入明細テーブルへの保存関数
-function insert_purchase_details($db, $item_id, $amount){
+function insert_purchase_details($db, $order_last_id, $item_id, $price, $amount){
   
   $sql  = "
     INSERT INTO
       purchase_details(
+        order_number,
         item_id,
+        price,
         amount
       )
-    VALUES(?, ?)
+    VALUES(?, ?, ?, ?)
   ";
 
-  return execute_query($db, $sql, array($item_id, $amount));
+  return execute_query($db, $sql, array($order_last_id, $item_id, $price, $amount));
 
 }
