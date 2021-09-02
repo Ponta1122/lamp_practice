@@ -11,12 +11,13 @@
   <div class="container">
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
-    <form action="item.js" class="text-right" method=“GET”>
-      <select id="menu" size="1">
+    <form action="index.php" class="text-right" method=“GET”>
+      <select name="menu" size="1">
         <option value="new_order" selected>新着順</option>
         <option value="high_price">価格が高い順</option>
         <option value="low_price">価格が低い順</option>
       </select>
+      <input type="submit" name="submit" value="並び替え">
     </form>
     <div class="card-deck">
       <div class="row">
@@ -48,7 +49,6 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="/item.js"></script>
 </body>
 </html>
 

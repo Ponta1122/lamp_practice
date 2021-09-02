@@ -94,7 +94,7 @@ function get_items_order_by_price_desc($db, $is_open = false){
 return fetch_all_query($db, $sql);
 }
 
-//価格安い順に並び替え
+//価格低い順に並び替え
 function get_items_order_by_price($db, $is_open = false){
   $sql = '
     SELECT
