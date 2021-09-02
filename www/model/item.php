@@ -43,6 +43,82 @@ function get_items($db, $is_open = false){
   return fetch_all_query($db, $sql);
 }
 
+//新着順に並び替え
+function get_items_order_by_created($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+    ';
+  }
+    $sql .= '
+      ORDER BY
+        created
+    ';
+return fetch_all_query($db, $sql);
+}
+
+//価格高い順に並び替え
+function get_items_order_by_price_desc($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+    ';
+  }
+    $sql .= '
+      ORDER BY
+        price
+      DESC
+    ';
+return fetch_all_query($db, $sql);
+}
+
+//価格低い順に並び替え
+function get_items_order_by_price($db, $is_open = false){
+  $sql = '
+    SELECT
+      item_id, 
+      name,
+      stock,
+      price,
+      image,
+      status
+    FROM
+      items
+  ';
+  if($is_open === true){
+    $sql .= '
+      WHERE status = 1
+    ';
+  }
+    $sql .= '
+      ORDER BY
+        price
+    ';
+return fetch_all_query($db, $sql);
+}
+
 function get_all_items($db){
   return get_items($db);
 }
